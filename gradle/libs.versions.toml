@@ -1,0 +1,206 @@
+[versions]
+# Build tools
+agp = "8.11.1"
+kotlin = "2.3.0"
+ksp = "2.3.2"
+google-services = "4.4.4"
+
+androidDesugarJdkLibs = "2.1.5"
+androidTools = "32.0.0"
+
+# AndroidX
+androidx-compose-bom = "2026.01.00"
+androidx-activity = "1.12.2"
+androidx-core = "1.17.0"
+androidx-lifecycle = "2.9.0"
+jetbrains-lifecycle = "2.8.2"
+androidx-appcompat = "1.7.1"
+androidx-test-ext = "1.2.1"
+androidx-test-core = "1.7.0"
+core-splashscreen = "1.2.0"
+navigation-compose = "2.9.0-beta04"
+
+# Kotlinx
+kotlinx-coroutines = "1.10.2"
+kotlinx-serialization = "1.9.0"
+kotlinx-datetime = "0.7.1"
+
+# Third party
+koin = "4.1.1"
+ktor = "3.4.0"
+room = "2.8.4"
+sqlite = "2.6.2"
+datastore = "1.2.0"
+firebase-bom = "34.8.0"
+coil = "3.3.0"
+coil-network = "3.3.0"
+moko = "0.20.1"
+buildkonfig = "0.17.1"
+jetbrains-savedstate = "1.4.0"
+jetbrains-core-bundle = "1.0.1"
+kermit = "2.0.8"
+
+# Project config
+projectApplicationId = "com.packeta.orbis.app"
+projectVersionName = "1.0"
+projectMinSdkVersion = "26"
+projectTargetSdkVersion = "36"
+projectCompileSdkVersion = "36"
+projectVersionCode = "1"
+runner = "1.7.0"
+junit = "1.3.0"
+
+[libraries]
+# Kotlin
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+
+# Kotlinx - SHARED
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+# Koin - SHARED
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-core-viewmodel = { group = "io.insert-koin", name = "koin-core-viewmodel", version.ref = "koin" }
+koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
+
+# Koin - ANDROID
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+koin-androidx-navigation = { group = "io.insert-koin", name = "koin-androidx-navigation", version.ref = "koin" }
+
+# Ktor - SHARED
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+# Ktor - Platform specific
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+
+# DataStore - SHARED
+datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
+# Room - SHARED
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+
+# Lifecycle - ANDROID (čisté AndroidX Compose)
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+
+# Lifecycle - SHARED (JetBrains pro KMP)
+jetbrains-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "jetbrains-lifecycle" }
+jetbrains-lifecycle-viewmodel-savedstate = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "jetbrains-lifecycle" }
+jetbrains-savedstate = { module = "org.jetbrains.androidx.savedstate:savedstate", version.ref = "jetbrains-savedstate" }
+jetbrains-bundle = { module = "org.jetbrains.androidx.core:core-bundle", version.ref = "jetbrains-core-bundle" }
+
+# Permissions - SHARED
+moko-permissions = { module = "dev.icerock.moko:permissions", version.ref = "moko" }
+moko-permissions-notifications = { module = "dev.icerock.moko:permissions-notifications", version.ref = "moko" }
+
+# Permissions - ANDROID (Compose)
+moko-permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "moko" }
+
+# Logging - SHARED
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+
+# Android Compose UI
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom" }
+androidx-material3 = { module = "androidx.compose.material3:material3" }
+androidx-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+
+# Android Core
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidx-activity" }
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
+
+# Android Testing
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test-core" }
+
+# Firebase - ANDROID
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
+
+# Coil - ANDROID (Compose)
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil-network" }
+
+# Build plugins
+android-desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
+compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+androidx-room-gradle-plugin = { module = "androidx.room:room-gradle-plugin", version.ref = "room" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
+buildkonfig-gradlePlugin = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-gradle-plugin", version.ref = "buildkonfig" }
+buildkonfig-compiler = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-compiler", version.ref = "buildkonfig" }
+
+[plugins]
+convention-android-application = { id = "com.packeta.orbis.convention.android.application", version = "unspecified" }
+convention-android-application-compose = { id = "com.packeta.orbis.convention.android.application.compose", version = "unspecified" }
+convention-kmp-application-compose = { id = "com.packeta.orbis.convention.kmp.application.compose", version = "unspecified" }
+convention-kmp-library = { id = "com.packeta.orbis.convention.kmp.library", version = "unspecified" }
+convention-kmp-library-compose = { id = "com.packeta.orbis.convention.kmp.library.compose", version = "unspecified" }
+convention-buildkonfig = { id = "com.packeta.orbis.convention.buildkonfig", version = "unspecified" }
+convention-room = { id = "com.packeta.orbis.convention.room", version = "unspecified" }
+
+
+# Android
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+
+# Kotlin
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+# Compose
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+# Build tools
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "room" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
+android-lint = { id = "com.android.lint", version.ref = "agp" }
+
+[bundles]
+# SHARED
+koin-shared = [
+    "koin-core"
+]
+
+ktor-shared = [
+    "ktor-client-core",
+    "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json",
+    "ktor-client-auth",
+    "ktor-client-logging"
+]
+
+# ANDROID module bundles
+koin-android = [
+    "koin-android",
+    "koin-compose",
+    "koin-compose-viewmodel",
+    "koin-androidx-compose",
+    "koin-androidx-navigation"
+]
