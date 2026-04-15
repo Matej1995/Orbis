@@ -1,0 +1,33 @@
+flowchart TB
+    TranslationTool["Translation tool\nCrowdin / Lokalise / Phrase"]
+    DesignSource["Design / brand source\nFigma, icon set, asset repository"]
+
+    AndroidResources["Android native resources\nstrings.xml, plurals.xml,\ndrawables"]
+    IOSResources["iOS native resources\nString Catalogs,\nAssets.xcassets"]
+
+    KMPKeys["KMP core:resources\nResourceKey, typed errors,\nenum-to-key mapping"]
+
+    AndroidUI["Android Compose UI\nuses R.string / resources"]
+    IOSUI["iOS SwiftUI\nuses String(localized:) / asset catalogs"]
+
+    SharedDomain["Shared domain/data\nreturns semantic values\nnot localized text"]
+
+    MOKOSpike["Optional MOKO / KMP resources spike\nonly if shared resource runtime is needed"]
+
+    TranslationTool --> AndroidResources
+    TranslationTool --> IOSResources
+
+    DesignSource --> AndroidResources
+    DesignSource --> IOSResources
+
+    SharedDomain --> KMPKeys
+    KMPKeys --> AndroidUI
+    KMPKeys --> IOSUI
+
+    AndroidResources --> AndroidUI
+    IOSResources --> IOSUI
+
+    TranslationTool -. alternative export .-> MOKOSpike
+    DesignSource -. alternative export .-> MOKOSpike
+    MOKOSpike -. opt-in, not default .-> AndroidUI
+    MOKOSpike -. opt-in, not default .-> IOSUI

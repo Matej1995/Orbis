@@ -1,0 +1,42 @@
+flowchart TB
+    subgraph Android["Android app"]
+        AndroidUI["Jetpack Compose UI"]
+        AndroidVM["Android ViewModels"]
+        AndroidPlatform["Android platform services\nFCM, Google Maps, BLE, PayU, Google Pay"]
+    end
+
+    subgraph IOS["iOS app"]
+        IOSUI["SwiftUI UI"]
+        IOSVM["Swift ViewModels\n@Observable / ObservableObject"]
+        IOSPlatform["iOS platform services\nAPNs, MapKit, CoreBluetooth, PayU, Apple Pay"]
+    end
+
+    subgraph Shared["KMP Shared"]
+        Facades["Feature Facades\nTrackingFacade, AuthFacade, ZBoxFacade"]
+        Domain["Domain\nUse cases, entities, errors, repository interfaces"]
+        Data["Data\nRepository impl, Ktor APIs, Room DAOs, mappers"]
+        Core["Core\nResult, AppError, AppConfig, logging, resources"]
+    end
+
+    Backend["Packeta Backend"]
+    LocalStorage["Local storage\nRoom, DataStore, Keystore / Keychain"]
+
+    AndroidUI --> AndroidVM
+    AndroidVM --> Domain
+    AndroidVM -. optional .-> Facades
+    AndroidVM --> AndroidPlatform
+
+    IOSUI --> IOSVM
+    IOSVM --> Facades
+    IOSVM --> IOSPlatform
+
+    Facades --> Domain
+    Domain --> Data
+    Data --> Backend
+    Data --> LocalStorage
+    Data --> Core
+    Domain --> Core
+    Facades --> Core
+
+    AndroidPlatform -. native transport / SDK callbacks .-> Data
+    IOSPlatform -. native transport / SDK callbacks .-> Data

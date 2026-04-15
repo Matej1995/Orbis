@@ -1,0 +1,21 @@
+flowchart TB
+    V1["Packeta v1\nexisting app ID / bundle ID"]
+    V2["Packeta v2\nnew app ID / bundle ID"]
+    Store["Store listing / adoption path"]
+    Backend["Backend\nsupports v1 + v2"]
+    Push["Push routing\nFCM/APNs registrations"]
+    Links["Deep links / universal links"]
+    Support["Support / communication"]
+
+    V1 --> Backend
+    V2 --> Backend
+    Store --> V2
+    Backend --> Push
+    Push --> V1
+    Push --> V2
+    Links --> V1
+    Links --> V2
+    Support --> V1
+    Support --> V2
+
+    V1 -. no local storage migration if app IDs differ .-> V2

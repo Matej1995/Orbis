@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Packeta v2.0 Architecture Preview</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f5;
+      --text: #171717;
+      --muted: #5f6468;
+      --border: #d7d7d2;
+      --panel: #ffffff;
+      --accent: #0f766e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    header,
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 32px 0 16px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+      line-height: 1.1;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    nav a {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 8px 10px;
+      text-decoration: none;
+      background: var(--panel);
+    }
+
+    nav a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    main {
+      display: grid;
+      gap: 24px;
+      padding: 16px 0 48px;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+      overflow: auto;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .diagram-copy {
+      color: var(--muted);
+      margin: 0 0 14px;
+      max-width: 920px;
+    }
+
+    .diagram-copy p + p {
+      margin-top: 8px;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    @media (max-width: 720px) {
+      header,
+      main {
+        width: min(100% - 20px, 1180px);
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      section {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Packeta v2.0 Architecture Preview</h1>
+    <p>Rendered previews from <code>docs/architecture-diagrams.md</code>.</p>
+    <nav aria-label="Diagram navigation">
+      <a href="#high-level">High-level</a>
+      <a href="#modules">Modules</a>
+      <a href="#runtime">Runtime flow</a>
+      <a href="#config">Config</a>
+      <a href="#ios-api">iOS API</a>
+      <a href="#transition">v1 -> v2</a>
+      <a href="#template">Template scope</a>
+      <a href="#resources">Resources</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="high-level">
+      <h2>1. High-level Architecture</h2>
+      <div class="diagram-copy">
+        <p>Shows the main ownership boundary. Android and iOS own native UI, ViewModels, navigation, and platform SDK integrations. KMP owns feature facades, domain rules, data access, caching, error mapping, and common contracts.</p>
+        <p>The main point: share business/data behavior, not presentation or platform SDK runtime.</p>
+      </div>
+      <img src="01-high-level-architecture.png" alt="High-level architecture diagram">
+    </section>
+
+    <section id="modules">
+      <h2>2. Module Dependency Graph</h2>
+      <div class="diagram-copy">
+        <p>Shows compile-time module dependencies. Android uses Android-only UI modules, while iOS consumes only the <code>:shared</code> umbrella framework.</p>
+        <p>The main point: KMP domain/data modules can be exported to iOS; Compose UI modules must stay Android-only.</p>
+      </div>
+      <img src="02-module-dependency-graph.png" alt="Module dependency graph">
+    </section>
+
+    <section id="runtime">
+      <h2>3. Runtime Data Flow</h2>
+      <div class="diagram-copy">
+        <p>Shows a typical cache-first read flow. The native screen calls a native ViewModel, iOS goes through a facade, the use case calls a repository, cached data renders first, then backend refresh updates the state.</p>
+        <p>Payments, auth, and Z-Box open are exceptions because they require stricter online/backend/device confirmation.</p>
+      </div>
+      <img src="03-runtime-data-flow.png" alt="Runtime data flow sequence diagram">
+    </section>
+
+    <section id="config">
+      <h2>4. Environment / Config Flow</h2>
+      <div class="diagram-copy">
+        <p>Shows how dev/stage/prod values enter shared code. Android reads Gradle/BuildConfig values, iOS reads xcconfig/Info.plist values, and both adapt them into the same <code>AppConfig</code> contract.</p>
+        <p>The main point: shared KMP modules do not own flavors and do not hardcode environment values.</p>
+      </div>
+      <img src="04-environment-config-flow.png" alt="Environment and config flow diagram">
+    </section>
+
+    <section id="ios-api">
+      <h2>5. iOS Public API Boundary</h2>
+      <div class="diagram-copy">
+        <p>Shows what Swift code is allowed to call. Swift ViewModels depend on feature facades, not internal use cases, repository interfaces, or data implementations.</p>
+        <p>The facade is a stable Swift-facing API boundary, not a shared ViewModel.</p>
+      </div>
+      <img src="05-ios-public-api-boundary.png" alt="iOS public API boundary diagram">
+    </section>
+
+    <section id="transition">
+      <h2>6. v1 -> v2 Transition</h2>
+      <div class="diagram-copy">
+        <p>Shows why v1 -> v2 is not a local database migration if v2 has a new app ID / bundle ID. The OS treats v2 as a separate app, so v1 local storage and tokens are not visible.</p>
+        <p>The transition needs backend coexistence, fresh login, store adoption path, push routing, deep-link routing, and support communication.</p>
+      </div>
+      <img src="06-v1-v2-transition.png" alt="v1 to v2 transition diagram">
+    </section>
+
+    <section id="template">
+      <h2>7. First Template Scope</h2>
+      <div class="diagram-copy">
+        <p>Shows what the first Orbis-based template should prove: module structure, build wiring, runtime config, iOS bridge, networking, storage, resource contracts, tests, and basic CI.</p>
+        <p>Payments, BLE, full release readiness, and complete security review are documented separately and are outside the first onboarding/auth foundation.</p>
+      </div>
+      <img src="07-first-template-scope.png" alt="First template scope diagram">
+    </section>
+
+    <section id="resources">
+      <h2>8. Resources / Localization Workflow</h2>
+      <div class="diagram-copy">
+        <p>Shows the proposed default for strings, plurals, icons, and image assets. Translation tooling exports native Android and iOS resources. Design/brand source exports platform-native visual assets.</p>
+        <p>KMP returns semantic values such as typed errors, enums, or resource keys. Android and iOS map those values to native resources. MOKO is shown as an opt-in alternative only if shared KMP resource runtime is required.</p>
+      </div>
+      <img src="08-resources-localization-workflow.png" alt="Resources and localization workflow diagram">
+    </section>
+  </main>
+</body>
+</html>

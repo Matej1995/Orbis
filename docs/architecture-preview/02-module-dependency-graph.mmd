@@ -1,0 +1,45 @@
+flowchart LR
+    AndroidApp[":androidApp"]
+    Shared[":shared\nXCFramework umbrella"]
+
+    CoreDomain[":core:domain"]
+    CoreData[":core:data"]
+    CoreConfig[":core:config"]
+    CoreResources[":core:resources"]
+    CoreUi[":core:ui\nAndroid only"]
+
+    FeatureDomain[":feature:x:domain"]
+    FeatureData[":feature:x:data"]
+    FeatureUi[":feature:x:ui\nAndroid only"]
+
+    IOSApp["iosApp\nSwiftUI"]
+
+    AndroidApp --> CoreUi
+    AndroidApp --> FeatureUi
+    AndroidApp --> CoreConfig
+
+    FeatureUi --> FeatureDomain
+    FeatureUi --> CoreUi
+
+    Shared --> FeatureDomain
+    Shared --> FeatureData
+    Shared --> CoreDomain
+    Shared --> CoreData
+    Shared --> CoreConfig
+    Shared --> CoreResources
+
+    IOSApp --> Shared
+
+    FeatureData --> FeatureDomain
+    FeatureData --> CoreData
+    FeatureData --> CoreConfig
+
+    CoreData --> CoreDomain
+    CoreData --> CoreConfig
+    CoreData --> CoreResources
+
+    FeatureDomain --> CoreDomain
+    FeatureDomain --> CoreResources
+
+    CoreUi -. "forbidden in shared export" .-> Shared
+    FeatureUi -. "forbidden in shared export" .-> Shared

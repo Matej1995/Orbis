@@ -1,0 +1,35 @@
+sequenceDiagram
+    participant User
+    participant NativeUI as Native UI
+    participant VM as Native ViewModel
+    participant Facade as Feature Facade
+    participant UseCase as Use Case
+    participant Repo as Repository
+    participant DB as Room cache
+    participant API as Backend API
+
+    User->>NativeUI: action / screen open
+    NativeUI->>VM: event
+
+    alt iOS
+        VM->>Facade: loadPackage(id)
+        Facade->>UseCase: invoke(id)
+    else Android
+        VM->>UseCase: invoke(id)
+    end
+
+    UseCase->>Repo: getPackage(id)
+    Repo->>DB: read cached data
+    DB-->>Repo: cached result
+    Repo-->>UseCase: cached domain model
+    UseCase-->>VM: state update
+    VM-->>NativeUI: render cached state
+
+    Repo->>API: refresh in background
+    API-->>Repo: fresh DTO
+    Repo->>Repo: map DTO -> domain
+    Repo->>DB: persist fresh data
+    DB-->>Repo: changed rows / Flow update
+    Repo-->>UseCase: fresh domain model
+    UseCase-->>VM: state update
+    VM-->>NativeUI: render fresh state

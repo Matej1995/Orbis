@@ -1,0 +1,29 @@
+flowchart TB
+    subgraph Android["Android"]
+        Gradle["Gradle product flavor\ndev / stage / prod"]
+        BuildConfig["Android BuildConfig"]
+        AndroidConfig["AndroidAppConfig : AppConfig"]
+    end
+
+    subgraph IOS["iOS"]
+        Xcconfig["xcconfig\ndev / stage / prod"]
+        InfoPlist["Info.plist values"]
+        IOSConfig["IosAppConfig : AppConfig"]
+    end
+
+    AppConfig["AppConfig interface\n:core:config"]
+    Koin["DI graph / app scope"]
+    HttpClient["HttpClientFactory"]
+    Analytics["AnalyticsTracker"]
+    FeatureFlags["FeatureFlagRepository"]
+
+    Gradle --> BuildConfig --> AndroidConfig
+    Xcconfig --> InfoPlist --> IOSConfig
+
+    AndroidConfig --> AppConfig
+    IOSConfig --> AppConfig
+
+    AppConfig --> Koin
+    Koin --> HttpClient
+    Koin --> Analytics
+    Koin --> FeatureFlags

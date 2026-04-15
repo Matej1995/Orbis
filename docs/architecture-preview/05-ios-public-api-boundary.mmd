@@ -1,0 +1,15 @@
+flowchart LR
+    SwiftVM["Swift ViewModel"]
+    Facade["TrackingFacade\npublic KMP API"]
+    UseCases["Internal use cases"]
+    Repos["Repository interfaces"]
+    DataImpl["Repository impl"]
+
+    SwiftVM --> Facade
+    Facade --> UseCases
+    UseCases --> Repos
+    DataImpl --> Repos
+
+    SwiftVM -. should not depend on .-> UseCases
+    SwiftVM -. should not depend on .-> Repos
+    SwiftVM -. should not depend on .-> DataImpl

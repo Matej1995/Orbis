@@ -1,0 +1,20 @@
+flowchart TB
+    Template["Orbis -> Packeta v2 template"]
+
+    Modules["Module structure\ncore + feature + shared + iosApp"]
+    Config["Runtime config\nAppConfig dev/stage/prod"]
+    SwiftBridge["iOS bridge\nfacades + SKIE spike"]
+    Network["Network foundation\nKtor + error mapping + mock mode"]
+    Storage["Storage foundation\nRoom KMP + DataStore"]
+    Resources["Resources\nnative export + ResourceKey contract"]
+    Tests["Basic tests\ncommonTest + Android unit"]
+    CI["Basic CI\nbuild + tests"]
+
+    Template --> Modules
+    Template --> Config
+    Template --> SwiftBridge
+    Template --> Network
+    Template --> Storage
+    Template --> Resources
+    Template --> Tests
+    Template --> CI
